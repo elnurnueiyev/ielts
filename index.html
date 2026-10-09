@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Practice Hub — Reading & Listening</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand" onclick="showPage('home')">
+        <span class="brand-icon">📚</span>
+        <span class="brand-text">IELTS Practice Hub</span>
+      </div>
+      <div class="nav-links">
+        <button class="nav-btn" onclick="showPage('home')">Home</button>
+        <button class="nav-btn" onclick="showPage('reading')">Reading</button>
+        <button class="nav-btn" onclick="showPage('listening')">Listening</button>
+        <button class="nav-btn" onclick="showPage('history')">My Progress</button>
+      </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="page-home" class="page active">
+      <div class="hero">
+        <h1>Master Your IELTS Skills</h1>
+        <p>Practice Reading and Listening with real-style tests, instant feedback, and detailed explanations.</p>
+      </div>
+
+      <div class="stats-row" id="home-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-tests">0</div>
+          <div class="stat-label">Tests Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reading">—</div>
+          <div class="stat-label">Avg Reading Band</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-listening">—</div>
+          <div class="stat-label">Avg Listening Band</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-label">Day Streak</div>
+        </div>
+      </div>
+
+      <div class="skill-cards">
+        <div class="skill-card reading-card" onclick="showPage('reading')">
+          <div class="skill-icon">📖</div>
+          <h2>Reading Practice</h2>
+          <p>3 full-length academic passages with multiple question types: MCQ, True/False/Not Given, matching, summary completion, and short answer.</p>
+          <div class="skill-meta">
+            <span class="badge">3 Tests</span>
+            <span class="badge">~20 min each</span>
+          </div>
+          <button class="btn btn-primary">Start Reading →</button>
+        </div>
+
+        <div class="skill-card listening-card" onclick="showPage('listening')">
+          <div class="skill-icon">🎧</div>
+          <h2>Listening Practice</h2>
+          <p>4 sections with audio playback, covering everyday conversations, orientations, academic discussions, and lectures.</p>
+          <div class="skill-meta">
+            <span class="badge">4 Tests</span>
+            <span class="badge">~10 min each</span>
+          </div>
+          <button class="btn btn-secondary">Start Listening →</button>
+        </div>
+      </div>
+
+      <div class="tips-section">
+        <h2>💡 Quick Tips</h2>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <strong>Reading:</strong> Skim the passage first (2-3 min), then read questions carefully. Watch for paraphrasing — answers rarely use the exact same words as the passage.
+          </div>
+          <div class="tip-card">
+            <strong>Listening:</strong> Use the preview time to read questions before the audio plays. Listen for signpost words like "however," "actually," and "the main point is."
+          </div>
+          <div class="tip-card">
+            <strong>Timing:</strong> Spend no more than 20 minutes per reading passage. In listening, you have 10 minutes to transfer answers at the end.
+          </div>
+          <div class="tip-card">
+            <strong>Strategy:</strong> Don't leave any answers blank — there's no penalty for wrong answers. Make an educated guess if you're unsure.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reading Test List -->
+    <div id="page-reading" class="page">
+      <div class="page-header">
+        <h1>📖 Reading Practice</h1>
+        <p>Choose a test to begin. Each test contains a full passage and 10 questions.</p>
+      </div>
+      <div class="test-list" id="reading-test-list"></div>
+    </div>
+
+    <!-- Listening Test List -->
+    <div id="page-listening" class="page">
+      <div class="page-header">
+        <h1>🎧 Listening Practice</h1>
+        <p>Choose a section to begin. Audio will be played using your browser's speech synthesis.</p>
+      </div>
+      <div class="test-list" id="listening-test-list"></div>
+    </div>
+
+    <!-- Reading Test Page -->
+    <div id="page-reading-test" class="page">
+      <div class="test-container">
+        <div class="test-header">
+          <button class="btn btn-back" onclick="showPage('reading')">← Back</button>
+          <div class="test-info">
+            <h2 id="reading-test-title"></h2>
+            <span id="reading-test-type" class="test-type-badge"></span>
+          </div>
+          <div class="timer" id="reading-timer">20:00</div>
+        </div>
+        <div class="test-body">
+          <div class="passage-panel">
+            <div class="panel-header">
+              <h3>Reading Passage</h3>
+            </div>
+            <div class="passage-content" id="reading-passage"></div>
+          </div>
+          <div class="questions-panel">
+            <div class="panel-header">
+              <h3>Questions</h3>
+              <span id="reading-progress" class="progress-text"></span>
+            </div>
+            <div id="reading-questions"></div>
+            <div class="test-actions">
+              <button class="btn btn-primary btn-submit" onclick="submitReadingTest()">Submit Answers</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Listening Test Page -->
+    <div id="page-listening-test" class="page">
+      <div class="test-container">
+        <div class="test-header">
+          <button class="btn btn-back" onclick="showPage('listening')">← Back</button>
+          <div class="test-info">
+            <h2 id="listening-test-title"></h2>
+            <span id="listening-test-type" class="test-type-badge"></span>
+          </div>
+          <div class="timer" id="listening-timer">10:00</div>
+        </div>
+
+        <!-- Audio Player -->
+        <div class="audio-player" id="audio-player">
+          <div class="audio-controls">
+            <button class="btn btn-play" id="btn-play" onclick="toggleAudio()">▶ Play</button>
+            <button class="btn btn-stop" onclick="stopAudio()">⏹ Stop</button>
+            <div class="speed-control">
+              <label>Speed:</label>
+              <select id="audio-speed" onchange="setAudioSpeed()">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+              </select>
+            </div>
+            <button class="btn btn-replay" onclick="replayAudio()">↻ Replay</button>
+          </div>
+          <div class="audio-status" id="audio-status">Click Play to start the audio</div>
+        </div>
+
+        <div class="test-body">
+          <div class="questions-panel full-width">
+            <div class="panel-header">
+              <h3>Questions</h3>
+              <span id="listening-progress" class="progress-text"></span>
+            </div>
+            <div id="listening-questions"></div>
+            <div class="test-actions">
+              <button class="btn btn-primary btn-submit" onclick="submitListeningTest()">Submit Answers</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transcript (hidden until after submit) -->
+        <div class="transcript-panel" id="transcript-panel" style="display:none;">
+          <div class="panel-header">
+            <h3>Transcript</h3>
+          </div>
+          <div class="transcript-content" id="transcript-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="page-results" class="page">
+      <div class="results-container">
+        <div class="results-header">
+          <h1>📊 Test Results</h1>
+          <div class="score-circle" id="score-circle">
+            <div class="score-value" id="score-value">0/10</div>
+            <div class="score-band" id="score-band">Band 0.0</div>
+          </div>
+        </div>
+        <div class="results-summary" id="results-summary"></div>
+        <div class="results-review" id="results-review"></div>
+        <div class="results-actions">
+          <button class="btn btn-primary" onclick="retakeTest()">Retake Test</button>
+          <button class="btn btn-secondary" onclick="showPage('home')">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Page -->
+    <div id="page-history" class="page">
+      <div class="page-header">
+        <h1>📈 My Progress</h1>
+        <p>Track your improvement over time.</p>
+      </div>
+      <div class="history-content" id="history-content"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
